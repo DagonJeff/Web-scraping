@@ -47,12 +47,11 @@ public class Scraper {
 				Path otpPath = Paths.get(downloadDir, fileName);
 				Files.createDirectories(otpPath.getParent());
 				Files.copy(inps, otpPath);
+				inps.close();
 			}
 			
 		}else throw new IOException("Falha ao baixar arquivo. Código: "+ responseCode);
 		
-		
 	}
-	
 
 }
