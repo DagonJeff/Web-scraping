@@ -12,7 +12,7 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
 public class FileCompressor {
 	
-	static void compressFiles(String srcDirPath, String zipFilePath)throws IOException{
+	public static void compressFiles(String srcDirPath, String zipFilePath)throws IOException{
 		
 		Path zipPath = Paths.get(zipFilePath);
 		

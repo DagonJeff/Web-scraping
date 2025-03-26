@@ -48,6 +48,8 @@ public class Scraper {
 				Files.createDirectories(otpPath.getParent());
 				Files.copy(inps, otpPath);
 				inps.close();
+			}finally {
+				conect.disconnect();
 			}
 			
 		}else throw new IOException("Falha ao baixar arquivo. Código: "+ responseCode);
