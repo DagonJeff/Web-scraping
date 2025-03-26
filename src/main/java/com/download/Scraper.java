@@ -19,20 +19,23 @@ public class Scraper {
 		
 		System.out.println("Acessando " + url);
 		Document doc = Jsoup.connect(url).get();
-		System.out.println("Baizando arquivos...");
+		System.out.println("Baixando arquivos...");
 		Elements links = doc.select("a[href$=.pdf]");
 		
 		for(Element link : links) {
 			String pdfUrl = link.attr("href");
 			String fileName = pdfUrl.substring(pdfUrl.lastIndexOf('/')+1);
 			
-			if(fileName.contains("Anexo I")|| fileName.contains("Anexo II")) {
+			String urlAnexo_I = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos/Anexo_I_Rol_2021RN_465.2021_RN627L.2024.pdf";
+			String urlAnexo_II = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos/Anexo_II_DUT_2021_RN_465.2021_RN628.2025_RN629.2025.pdf";
+			
+			if(pdfUrl.equals(urlAnexo_I)|| pdfUrl.equals(urlAnexo_II)) {
+				
 				download(pdfUrl, downDir);
 				System.out.println("Arquivo :" + fileName + " baixado com sucesso!");
 			}
 					
 		}
-		
 	}
 	private static void download(String pdfUrl, String downloadDir) throws IOException{
 		

@@ -14,6 +14,8 @@ public class FileCompressor {
 	
 	public static void compressFiles(String srcDirPath, String zipFilePath)throws IOException{
 		
+		System.out.println("Compactando arquivos");
+		
 		Path zipPath = Paths.get(zipFilePath);
 		
 		try(ArchiveOutputStream arch = new ZipArchiveOutputStream(Files.newOutputStream(zipPath))){

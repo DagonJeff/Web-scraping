@@ -26,15 +26,18 @@ public class WebScraping {
 			Scraper.downloadAnexos(URL, DOWNLOAD_DIRECTORY);
 			FileCompressor.compressFiles(DOWNLOAD_DIRECTORY, ZIP_PATH);
 			
+			System.out.println("Processo concluído com sucesso!");
 			
 		} catch (Exception e) {
 			
 			System.err.println("Erro ao tentar realizar operação: "+e.getMessage());
 			e.printStackTrace();
 			
-		}finally {
+		}
+		finally {
 			try {
 				FileCleaner.cleanUp(Paths.get(DOWNLOAD_DIRECTORY));
+				System.out.println("Limpeza finalizada!");
 			} catch (IOException e) {
 				System.err.println("Falha ao limpar diretório. "+e.getMessage());
 				e.printStackTrace();
