@@ -13,7 +13,7 @@ public class WebScraping {
 	
 	private static final String URL = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos";
 	private static final String DOWNLOAD_DIRECTORY = "temp_downloads/";
-	private static final String ZIP_PATH = "arquivos_anexados.zip";
+	private static final String ZIP_PATH = "arquivos_compactados.zip";
 	private static final String URL_ANEXO_I = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos/Anexo_I_Rol_2021RN_465.2021_RN627L.2024.pdf";
 	private static final String URL_ANEXO_II = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos/Anexo_II_DUT_2021_RN_465.2021_RN628.2025_RN629.2025.pdf";
 	private static final String NAME_ANEXO_I = "Anexo_I.pdf";
