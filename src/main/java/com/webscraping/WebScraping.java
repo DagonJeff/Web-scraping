@@ -13,11 +13,12 @@ public class WebScraping {
 	
 	private static final String URL = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos";
 	private static final String DOWNLOAD_DIRECTORY = "temp_downloads/";
-	private static final String ZIP_PATH = "arquivos_compactados.zip";
+	private static final String ZIP_PATH = "op/arquivos_compactados.zip";
 	private static final String URL_ANEXO_I = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos/Anexo_I_Rol_2021RN_465.2021_RN627L.2024.pdf";
 	private static final String URL_ANEXO_II = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos/Anexo_II_DUT_2021_RN_465.2021_RN628.2025_RN629.2025.pdf";
 	private static final String NAME_ANEXO_I = "Anexo_I.pdf";
 	private static final String NAME_ANEXO_II = "Anexo_II.pdf";
+	private static final String DECOMPRESS_DIRECTORY = "arquivos_descompactados/";
 	
 	
 	
@@ -31,6 +32,8 @@ public class WebScraping {
 			Scraper.downloadFiles(URL, DOWNLOAD_DIRECTORY, URL_ANEXO_II, NAME_ANEXO_II);
 
 			FileCompressor.compressFiles(DOWNLOAD_DIRECTORY, ZIP_PATH);
+			
+			FileCompressor.decompressFile(ZIP_PATH, DECOMPRESS_DIRECTORY, NAME_ANEXO_I);
 			
 			System.out.println("Processo concluído com sucesso!");
 			

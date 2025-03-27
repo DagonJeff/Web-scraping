@@ -42,11 +42,15 @@ public class FileCompressor {
 					e.printStackTrace();
 				}
 			});
+		}catch (IOException e) {
+			throw new IOException("Compactação Falhou: "+e.getMessage(), e);
 		}
 	}
 	
 //=======================Descompactar===============================================================//	
 	public static void decompressFile(String zipFilePath, String destDir, String spcFileName) throws IOException{
+		
+		System.out.println("Descompactando arquivos...");
 		
 		File dir = new File(destDir);
 		if(!dir.exists()) dir.mkdirs();
@@ -71,6 +75,8 @@ public class FileCompressor {
                 ent = zipIn.getNextEntry();
 				
 			}
+		}catch (IOException e) {
+			throw new IOException("Descompactação Falhou: "+e.getMessage(), e);
 		}
 		
 	}
