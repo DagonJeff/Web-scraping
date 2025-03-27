@@ -20,13 +20,18 @@ public class FileCompressor {
 	
 	
 //=======================Compactar===================================================================//	
-	public static void compressFiles(String srcDirPath, String zipFilePath)throws IOException{
+	public static void compressFiles(String srcDirPath,String destDir, String zipFileName)throws IOException{
 		
 		System.out.println("Compactando arquivos");
+		Path destDirPath = Paths.get(destDir);
 		
-		Path zipPath = Paths.get(zipFilePath);
+		try {
+			if(!Files.exists(destDirPath)) Files.createDirectories(destDirPath);
+			
+			Path zipFilePath = destDirPath.resolve(zipFileName);
+//		Path zipPath = Paths.get(zipFilePath);
 		
-		try(ArchiveOutputStream arch = new ZipArchiveOutputStream(Files.newOutputStream(zipPath))){
+		try(ArchiveOutputStream arch = new ZipArchiveOutputStream(Files.newOutputStream(zipFilePath))){
 			
 			Path srcDir = Paths.get(srcDirPath);
 			Files.walk(srcDir).filter(path -> !Files.isDirectory(path)).forEach(path -> {
@@ -42,6 +47,7 @@ public class FileCompressor {
 					e.printStackTrace();
 				}
 			});
+			}
 		}catch (IOException e) {
 			throw new IOException("Compactação Falhou: "+e.getMessage(), e);
 		}
