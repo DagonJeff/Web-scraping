@@ -12,6 +12,8 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
 public class FileCompressor {
 	
+	
+//=======================Compactar===================================================================//	
 	public static void compressFiles(String srcDirPath, String zipFilePath)throws IOException{
 		
 		System.out.println("Compactando arquivos");
@@ -35,6 +37,11 @@ public class FileCompressor {
 				}
 			});
 		}
+	}
+	
+//=======================Descompactar===============================================================//	
+	public static void decompressFile() {
+		
 	}
 
 }
