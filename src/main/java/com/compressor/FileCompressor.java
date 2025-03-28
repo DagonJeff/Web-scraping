@@ -23,37 +23,77 @@ public class FileCompressor {
 	public static void compressFiles(String srcDirPath,String destDir, String zipFileName)throws IOException{
 		
 		System.out.println("Compactando arquivos...");
-		Path destDirPath = Paths.get(destDir);
 		
-		try {
-			if(!Files.exists(destDirPath)) Files.createDirectories(destDirPath);
-			
-			Path zipFilePath = destDirPath.resolve(zipFileName);
-//		Path zipPath = Paths.get(zipFilePath);
+        Path destDirPath = Paths.get(destDir);
+        
+        try {
+            if (!Files.exists(destDirPath)) Files.createDirectories(destDirPath);
+            
+            Path zipFilePath = destDirPath.resolve(zipFileName);
+            
+            try (ArchiveOutputStream arch = new ZipArchiveOutputStream(Files.newOutputStream(zipFilePath))) {
+                Path srcPath = Paths.get(srcDirPath);
+                if (Files.isDirectory(srcPath)) {
+                    // Compactar todos os arquivos do diretório
+                    Files.walk(srcPath).filter(p -> !Files.isDirectory(p)).forEach(p -> {
+                        ArchiveEntry ent = new ZipArchiveEntry(srcPath.relativize(p).toString());
+                        try {
+                            arch.putArchiveEntry(ent);
+                            Files.copy(p, arch);
+                            arch.closeArchiveEntry();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                } else {
+                    // Compactar um único arquivo
+                    ArchiveEntry ent = new ZipArchiveEntry(srcPath.getFileName().toString());
+                    try {
+                        arch.putArchiveEntry(ent);
+                        Files.copy(srcPath, arch);
+                        arch.closeArchiveEntry();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            System.out.println("Compactado com sucesso!");
+        } catch (IOException e) {
+            throw new IOException("Compactação Falhou: " + e.getMessage(), e);
+        }
+    }
 		
-		try(ArchiveOutputStream arch = new ZipArchiveOutputStream(Files.newOutputStream(zipFilePath))){
-			
-			Path srcDir = Paths.get(srcDirPath);
-			Files.walk(srcDir).filter(path -> !Files.isDirectory(path)).forEach(path -> {
-				ArchiveEntry ent = new ZipArchiveEntry(srcDir.relativize(path).toString());
-				
-				try {
-					arch.putArchiveEntry(ent);
-					Files.copy(path, arch);
-					arch.closeArchiveEntry();
-					
-					
-				} catch (Exception e) {
-					
-					e.printStackTrace();
-				}
-			});
-			}
-		System.out.println("Compactado com sucesso!");
-		}catch (IOException e) {
-			throw new IOException("Compactação Falhou: "+e.getMessage(), e);
-		}
-	}
+//		Path destDirPath = Paths.get(destDir);
+//		
+//		try {
+//			if(!Files.exists(destDirPath)) Files.createDirectories(destDirPath);
+//			
+//			Path zipFilePath = destDirPath.resolve(zipFileName);
+////		Path zipPath = Paths.get(zipFilePath);
+//		
+//		try(ArchiveOutputStream arch = new ZipArchiveOutputStream(Files.newOutputStream(zipFilePath))){
+//			
+//			Path srcDir = Paths.get(srcDirPath);
+//			Files.walk(srcDir).filter(path -> !Files.isDirectory(path)).forEach(path -> {
+//				ArchiveEntry ent = new ZipArchiveEntry(srcDir.relativize(path).toString());
+//				
+//				try {
+//					arch.putArchiveEntry(ent);
+//					Files.copy(path, arch);
+//					arch.closeArchiveEntry();
+//					
+//					
+//				} catch (Exception e) {
+//					
+//					e.printStackTrace();
+//				}
+//			});
+//			}
+//		System.out.println("Compactado com sucesso!");
+//		}catch (IOException e) {
+//			throw new IOException("Compactação Falhou: "+e.getMessage(), e);
+//		}
+//	}
 	
 //=======================Descompactar===============================================================//	
 	public static void decompressFile(String zipFilePath, String destDir, String spcFileName) throws IOException{

@@ -44,6 +44,8 @@ public class WebScraping {
 					
 			PdfExtractor.extractTableToCSV(DECOMPRESS_DIRECTORY+NAME_ANEXO_I, CSV_PATH);
 			
+			FileCompressor.compressFiles(CSV_PATH, COMPRESS_DIRECTORY, CSV_ZIP_NAME);
+			
 			System.out.println("Processo concluído!");
 			
 		} catch (IOException e) {
