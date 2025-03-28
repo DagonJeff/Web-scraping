@@ -22,7 +22,7 @@ public class FileCompressor {
 //=======================Compactar===================================================================//	
 	public static void compressFiles(String srcDirPath,String destDir, String zipFileName)throws IOException{
 		
-		System.out.println("Compactando arquivos");
+		System.out.println("Compactando arquivos...");
 		Path destDirPath = Paths.get(destDir);
 		
 		try {
@@ -42,12 +42,14 @@ public class FileCompressor {
 					Files.copy(path, arch);
 					arch.closeArchiveEntry();
 					
+					
 				} catch (Exception e) {
 					
 					e.printStackTrace();
 				}
 			});
 			}
+		System.out.println("Compactado com sucesso!");
 		}catch (IOException e) {
 			throw new IOException("Compactação Falhou: "+e.getMessage(), e);
 		}
@@ -79,8 +81,10 @@ public class FileCompressor {
                 }
                 zipIn.closeEntry();
                 ent = zipIn.getNextEntry();
+                
 				
 			}
+			System.out.println("Descompactado com sucesso!");
 		}catch (IOException e) {
 			throw new IOException("Descompactação Falhou: "+e.getMessage(), e);
 		}

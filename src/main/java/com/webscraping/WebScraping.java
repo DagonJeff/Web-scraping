@@ -1,13 +1,16 @@
 package com.webscraping;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import com.cleaner.FileCleaner;
 import com.compressor.FileCompressor;
 import com.download.Scraper;
+import com.extractor.PdfExtractor;
 
 public class WebScraping {
 	
@@ -39,8 +42,9 @@ public class WebScraping {
 			
 			FileCompressor.decompressFile(COMPRESS_DIRECTORY+ZIP_NAME, DECOMPRESS_DIRECTORY, NAME_ANEXO_I);
 					
+			PdfExtractor.extractTableToCSV(DECOMPRESS_DIRECTORY+NAME_ANEXO_I, CSV_PATH);
 			
-			System.out.println("Processo concluído com sucesso!");
+			System.out.println("Processo concluído!");
 			
 		} catch (IOException e) {
 			
