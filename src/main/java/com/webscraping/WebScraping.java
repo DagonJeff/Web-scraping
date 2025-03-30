@@ -61,6 +61,9 @@ public class WebScraping {
 		finally {
 			try {
 				FileCleaner.cleanUp(Paths.get(DOWNLOAD_DIRECTORY));
+				FileCleaner.cleanUp(Paths.get(DECOMPRESS_DIRECTORY));
+				FileCleaner.cleanUp(Paths.get(CSV_PATH));
+				
 				System.out.println("Limpeza finalizada!");
 			} catch (IOException e) {
 				System.err.println("Falha ao limpar diretório. "+e.getMessage());
