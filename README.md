@@ -44,4 +44,86 @@ Para utilizar o Tabula, siga os passos abaixo:
 2. Extraia o conteúdo do arquivo baixado.
 3. Adicione o caminho do executável do Tabula ao seu PATH do sistema.
 
+### Passos para Configuração Cloud
+
+1. Configure suas credenciais AWS:
+
+   ```sh
+   aws configure
+   ```
+
+2. Inicialize o Terraform:
+
+   ```sh
+   terraform init
+   ```
+
+3. Aplique a configuração do Terraform:
+
+   ```sh
+   terraform apply
+   ```
+
+4. Configure o GitHub Actions para CI/CD, adicionando as credenciais AWS como segredos no GitHub.
+
+### Arquivo main.tf
+
+```hcl
+provider "aws" {
+  region = "us-west-2"
+}
+
+resource "aws_instance" "web" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "WebScrapingInstance"
+  }
+}
+
+resource "aws_s3_bucket" "bucket" {
+  bucket = "web-scraping-data"
+  acl    = "private"
+}
+```
+
+### Arquivo deploy.yml
+
+```yaml
+name: Deploy to AWS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+    
+    - name: Build with Maven
+      run: mvn clean install
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+    
+    - name: Deploy to EC2
+      run: |
+        # Comandos para implantar o aplicativo no EC2
+```
+
 **Autor:** [DagonJeff](https://github.com/DagonJeff)
